@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Es.InkPainter.Sample
 {
@@ -19,17 +20,23 @@ namespace Es.InkPainter.Sample
 
 		[SerializeField]
 		private Brush brush;
-
+		
 		[SerializeField]
 		private UseMethodType useMethodType = UseMethodType.RaycastHitInfo;
 
-		[SerializeField]
-		bool erase = false;
-
+		
+		public bool erase = false;
+		
+		public Color color;
+		 
+		[SerializeField] private Slider ScaleSlider;
 		private void Update()
 		{
+			brush.brushColor = color;
 			if(Input.GetMouseButton(0))
 			{
+				brush.brushScale = ScaleSlider.value;
+				
 				var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 				bool success = true;
 				RaycastHit hitInfo;

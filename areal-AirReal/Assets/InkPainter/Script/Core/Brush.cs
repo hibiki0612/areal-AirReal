@@ -111,8 +111,8 @@ namespace Es.InkPainter
 		[SerializeField]
 		private Texture brushHeightTexture;
 
-		[SerializeField, Range(0, 1)]
-		private float brushScale = 0.1f;
+		
+		public float brushScale = 0.1f;
 
 		[SerializeField, Range(0, 360)]
 		private float rotateAngle = 0;
@@ -123,8 +123,8 @@ namespace Es.InkPainter
 		[SerializeField, Range(0, 1)]
 		private float brushHeightBlend = 0.1f;
 
-		[SerializeField]
-		private Color brushColor;
+		
+		public Color brushColor;
 
 		[SerializeField]
 		private ColorBlendType colorBlendType;
