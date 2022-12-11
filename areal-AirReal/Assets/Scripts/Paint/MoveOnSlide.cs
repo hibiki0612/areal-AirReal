@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using UnityEngine.EventSystems;
 public class MoveOnSlide : MonoBehaviour
 {
@@ -31,26 +32,22 @@ public class MoveOnSlide : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
 
-                
-                if(hit.transform.tag == "PaintCanvas")
+                obj = hit.collider.gameObject;
+
+                Vector2 delta = touch.deltaPosition * 0.001f;
+                if ((delta.x > -1 && delta.y > -1) && (delta.x < 1 && delta.y < 1))
                 {
-                    obj = hit.collider.gameObject;
 
 
-                    Vector2 delta = touch.deltaPosition * 0.001f;
-                    if ((delta.x > -1 && delta.y > -1) && (delta.x < 1 && delta.y < 1))
-                    {
+                    Vector3 moveForward = Camera.main.transform.up * delta.y + Camera.main.transform.right * delta.x;
 
+                    obj.transform.position += moveForward;
 
-                        Vector3 moveForward = Camera.main.transform.up * delta.y + Camera.main.transform.right * delta.x;
-
-                        obj.transform.position += moveForward;
-
-                        obj.transform.rotation = Camera.main.transform.rotation;
+                    obj.transform.rotation = Camera.main.transform.rotation;
                         
-                    }
                 }
                 
+               
                 
             }
         }
