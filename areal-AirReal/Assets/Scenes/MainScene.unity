@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1456,6 +1456,7 @@ MonoBehaviour:
   useMethodType: 0
   erase: 0
   color: {r: 0.3019608, g: 0.3529412, b: 0.7372549, a: 1}
+  ScaleSlider: {fileID: 552322554}
 --- !u!1 &1062718410
 GameObject:
   m_ObjectHideFlags: 0
