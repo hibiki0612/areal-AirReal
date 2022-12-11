@@ -6,28 +6,35 @@ public class MoveOnSlide : MonoBehaviour
 {
     void Update()
     {
-        // ƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éê‡
+        // ï¿½^ï¿½bï¿½`ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ê‡
         if (Input.touchCount > 0)
         {
-            // Å‰‚Éƒ^ƒbƒ`‚³‚ê‚½‚à‚Ì‚ğæ“¾
+            // ï¿½Åï¿½ï¿½Éƒ^ï¿½bï¿½`ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½æ“¾
             Touch touch = Input.touches[0];
 
-            // ƒ^ƒbƒ`‚³‚ê‚½ˆÊ’u‚©‚çRay‚ğ”ò‚Î‚·
+            // ï¿½^ï¿½bï¿½`ï¿½ï¿½ï¿½ê‚½ï¿½Ê’uï¿½ï¿½ï¿½ï¿½Rayï¿½ï¿½ï¿½Î‚ï¿½
             Ray ray = Camera.main.ScreenPointToRay(touch.position);
             RaycastHit hit;
 
-            // Ray‚ªÕ“Ë‚µ‚½ƒIƒuƒWƒFƒNƒg‚ª‚ ‚é‚©”»’è
+            // Rayï¿½ï¿½ï¿½Õ“Ë‚ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½é‚©ï¿½ï¿½ï¿½ï¿½
             if (Physics.Raycast(ray, out hit))
             {
-                // Õ“Ë‚µ‚½ƒIƒuƒWƒFƒNƒg‚ğæ“¾
+                
                 GameObject obj = hit.collider.gameObject;
 
-                // ƒ^ƒbƒ`‚ÌˆÚ“®—Ê‚ğæ“¾
                 Vector2 delta = touch.deltaPosition * 0.001f;
+                if ((delta.x > -1 && delta.y > -1) && (delta.x < 1 && delta.y < 1))
+                {
+                    
+                    // æ–¹å‘ã‚­ãƒ¼ã®å…¥åŠ›å€¤ã¨ã‚«ãƒ¡ãƒ©ã®å‘ãã‹ã‚‰ã€ç§»å‹•æ–¹å‘ã‚’æ±ºå®š
+                    Vector3 moveForward = Camera.main.transform.up * delta.y + Camera.main.transform.right * delta.x;
+                    
+                    obj.transform.position += moveForward;
 
-                obj.transform.position += new Vector3(delta.x,delta.y,0);
-
-                obj.transform.rotation = Camera.main.transform.rotation;
+                    obj.transform.rotation = Camera.main.transform.rotation;
+                    Debug.Log(moveForward);
+                }
+                
             }
         }
     }
