@@ -58,3 +58,9 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Firebase関連のAsset
+Firebase/
+Editor Default Resources/
+ExternalDependencyManager/
+Plugins/
+.vsconfig
