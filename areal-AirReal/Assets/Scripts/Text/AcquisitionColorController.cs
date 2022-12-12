@@ -8,11 +8,15 @@ public class AcquisitionColorController : MonoBehaviour
 {
     public Color color;
     
-    public Texture tex;
-    public Texture2D texture2D;
-    [SerializeField] private GameObject Plate;
-    [SerializeField] private Image image;
-    public RenderTexture texture;
+    private Texture tex;
+    private Texture2D texture2D;
+
+    private Texture2D targetTexture;
+
+    private void Start()
+    {
+        targetTexture = new Texture2D(1, 1);
+    }
     void Update()
     {
 
@@ -36,21 +40,50 @@ public class AcquisitionColorController : MonoBehaviour
                 {
                     
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
-                    
-                    texture2D = new Texture2D(tex.width, tex.height,TextureFormat.ARGB32, false);
-                    Graphics.CopyTexture(tex, texture2D);
-                    
-                    
-                    image.material.mainTexture = texture2D;
-                    
+                    texture2D = ToTexture2D(tex);
+                    Debug.Log(texture2D);
+
                     var png = texture2D.EncodeToPNG();
                     File.WriteAllBytes("Assets/Image/paint.png", png);
+                    Debug.Log(hit.textureCoord);
+                    StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y));
                     
-                    color = texture2D.GetPixel((int)touchPos.x, (int)touchPos.y);
+                    //color = texture2D.GetPixel((int)hit.textureCoord.x,(int)hit.textureCoord.y);             
+                    
                 }
                 
             }
 
         }
+    }
+
+    private IEnumerator GetColorCoroutine(int x, int y)
+
+    {
+
+        yield return new WaitForEndOfFrame();
+
+        targetTexture.ReadPixels(new Rect(x,y, 1, 1), 0, 0);
+
+        color = targetTexture.GetPixel(0, 0);
+
+    }
+
+
+    public Texture2D ToTexture2D(Texture texture)
+    {
+        var sw = texture.width;
+        var sh = texture.height;
+        var format = TextureFormat.RGBA32;
+        var result = new Texture2D(sw, sh, format, false);
+        var currentRT = RenderTexture.active;
+        var rt = new RenderTexture(sw, sh, 32);
+        Graphics.Blit(texture, rt);
+        RenderTexture.active = rt;
+        var source = new Rect(0, 0, rt.width, rt.height);
+        result.ReadPixels(source, 0, 0);
+        result.Apply();
+        RenderTexture.active = currentRT;
+        return result;
     }
 }

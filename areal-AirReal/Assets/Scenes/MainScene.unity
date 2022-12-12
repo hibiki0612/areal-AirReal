@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -351,7 +351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &142228477
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3999,6 +3999,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8343829450905323032, guid: fae4e085c90354240a7a84c97f3286e4, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8343829450905323035, guid: fae4e085c90354240a7a84c97f3286e4, type: 3}
+      propertyPath: paintSet.Array.data[0].useMainPaint
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8343829450905323047, guid: fae4e085c90354240a7a84c97f3286e4, type: 3}
@@ -4047,11 +4051,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fae4e085c90354240a7a84c97f3286e4, type: 3}
---- !u!1 &1437222130 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8343829450905323032, guid: fae4e085c90354240a7a84c97f3286e4, type: 3}
-  m_PrefabInstance: {fileID: 1430285186}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1493926146
 GameObject:
   m_ObjectHideFlags: 0
@@ -4622,7 +4621,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1812259057
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4695,11 +4694,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0, b: 0, a: 0}
-  tex: {fileID: 0}
-  texture2D: {fileID: 0}
-  Plate: {fileID: 1437222130}
-  image: {fileID: 1972419694}
-  texture: {fileID: 0}
 --- !u!1 &1841009744
 GameObject:
   m_ObjectHideFlags: 0
@@ -5345,7 +5339,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -1617, y: 0}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 256, y: 256}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1972419694
 MonoBehaviour:
