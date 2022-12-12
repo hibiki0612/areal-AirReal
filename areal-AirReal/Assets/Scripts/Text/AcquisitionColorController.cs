@@ -47,9 +47,7 @@ public class AcquisitionColorController : MonoBehaviour
                     File.WriteAllBytes("Assets/Image/paint.png", png);
                     Debug.Log(hit.textureCoord);
                     StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y));
-                    
-                    //color = texture2D.GetPixel((int)hit.textureCoord.x,(int)hit.textureCoord.y);             
-                    
+                                        
                 }
                 
             }
