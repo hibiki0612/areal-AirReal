@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -26,6 +27,7 @@ public class getImage : MonoBehaviour
             
             StorageReference imageRef = storageRef.Child(DictionaryData["path"].ToString());
 
+
             _ = imageRef.GetBytesAsync(maxAllowedSize).ContinueWithOnMainThread(task =>
             {
                 if (task.IsFaulted || task.IsCanceled)
@@ -34,18 +36,25 @@ public class getImage : MonoBehaviour
                 }
                 else
                 {
+                    // 画像データ
                     byte[] fileContents = task.Result;
-                    // テストコード
-                    string str = "";
-                    for (int i = 0; i < fileContents.Length; i++)
-                    {
-                        str += string.Format("{0:X2}", fileContents[i]);
-                    }
-                    Debug.Log(str);
-                    //ここまで
-                    Debug.Log("Finished downloading!");
 
                     // ここでgeospatial apiを呼び出す
+
+                    // 緯度経度高度
+                    float latitude = (float)Convert.ChangeType(DictionaryData["latitude"], typeof(float));
+                    float logitude = (float)Convert.ChangeType(DictionaryData["longtitude"], typeof(float));
+                    float altitude = (float)Convert.ChangeType(DictionaryData["altitude"], typeof(float));
+
+                    float quaternion_x = (float)Convert.ChangeType(DictionaryData["quaternion_x"], typeof(float));
+                    float quaternion_y = (float)Convert.ChangeType(DictionaryData["quaternion_y"], typeof(float));
+                    float quaternion_z = (float)Convert.ChangeType(DictionaryData["quaternion_z"], typeof(float));
+                    float quaternion_w = (float)Convert.ChangeType(DictionaryData["quaternion_w"], typeof(float));
+
+                    // Quaternion
+                    Quaternion quaternion = new Quaternion(quaternion_x, quaternion_y, quaternion_z, quaternion_w);
+
+
                 }
             });
 
