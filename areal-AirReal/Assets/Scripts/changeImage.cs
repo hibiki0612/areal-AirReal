@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 public class changeImage : MonoBehaviour
 {
     // 画像をストレージに保存し、そのパスを firestore に保存する
+    //public void SaveImageAndPath(Dictionary<string, object> product_data, Texture2D image)
     public void SaveImageAndPath(Texture2D image)
     {
 
