@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace Es.InkPainter.Sample
 {
@@ -35,6 +36,11 @@ namespace Es.InkPainter.Sample
 			brush.brushColor = color;
 			if(Input.GetMouseButton(0))
 			{
+				#if UNITY_EDITOR
+					if (EventSystem.current.IsPointerOverGameObject()) return;
+				#else
+					if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))return;
+				#endif
 				brush.brushScale = ScaleSlider.value;
 				
 				var ray = Camera.main.ScreenPointToRay(Input.mousePosition);

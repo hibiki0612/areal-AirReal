@@ -8,6 +8,8 @@ public class PaintCanvasCreate : MonoBehaviour
     [SerializeField] private GameObject PaintCanvas;
     private Transform mainCamera;
     [SerializeField] private Slider DistanceSlider;
+
+    public GameObject TargetObj;
     
     // Start is called before the first frame update
     void Start()
@@ -22,6 +24,6 @@ public class PaintCanvasCreate : MonoBehaviour
     {
         
         var position = mainCamera.position + mainCamera.forward * DistanceSlider.value;
-        Instantiate(PaintCanvas, position, mainCamera.rotation);
+        TargetObj = Instantiate(PaintCanvas, position, mainCamera.rotation);
     }
 }
