@@ -1,0 +1,16 @@
+{
+    "dictionary": [
+        {
+            "key": "human",
+            "value": "[56, 115, 243]"
+        },
+        {
+            "key": "antenna",
+            "value": "[243, 148, 56]"
+        },
+        {
+            "key": "FULL_TEXT",
+            "value": "a human, has big antenna, on the grass."
+        }
+    ]
+}
