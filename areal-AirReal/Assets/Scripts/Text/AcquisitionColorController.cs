@@ -41,11 +41,11 @@ public class AcquisitionColorController : MonoBehaviour
                     
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
                     texture2D = ToTexture2D(tex);
-                    Debug.Log(texture2D);
+                    
 
                     var png = texture2D.EncodeToPNG();
                     File.WriteAllBytes("Assets/Image/paint.png", png);
-                    Debug.Log(hit.textureCoord);
+                    
                     StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y));
                                         
                 }

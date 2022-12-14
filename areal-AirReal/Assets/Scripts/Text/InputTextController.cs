@@ -9,7 +9,8 @@ public class InputTextController : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI text;
 
-    
+    [SerializeField] private GameObject TextObj;
+     
     void Start()
     {
 
@@ -25,19 +26,21 @@ public class InputTextController : MonoBehaviour
 	                    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))return;
 #endif
             Vector3 touchPos = Input.GetTouch(0).position;
-
+            
             Ray ray = Camera.main.ScreenPointToRay(touchPos);
-            var TouchWorldPos = Camera.main.ScreenToWorldPoint(touchPos);
+            
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
             {
                 if (hit.transform.tag == "PaintCanvas")
                 {
-                    var position = new Vector3(TouchWorldPos.x, TouchWorldPos.y, -0.01f);
-                    var text1 = Instantiate(text, position, Quaternion.identity);
-                    text1.transform.parent = hit.transform.GetChild(0);
-                    text1.transform.position = TouchWorldPos;
+                    
+                    var position = new Vector3(hit.textureCoord.x, hit.textureCoord.y, 0);
+                    var textObj1 = Instantiate(TextObj);
+                    textObj1.GetComponent<RectTransform>().position = position;
+                    textObj1.transform.parent = hit.transform.GetChild(0);
+                    
                 }
             }
         }
