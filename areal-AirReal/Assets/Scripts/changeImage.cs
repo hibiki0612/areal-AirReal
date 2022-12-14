@@ -11,9 +11,9 @@ public class changeImage : MonoBehaviour
     // 保存するデータ
     Quaternion move_q = Quaternion.Euler(0f, 0f, 1.0f);
     Dictionary<string, object> product_data = new Dictionary<string, object> {
-        {"latitude", ""},
-        {"longitude", ""},
-        {"altitude", ""},
+        {"latitude", 0},
+        {"longitude", 0},
+        {"altitude", 0},
     };
 
     // 画像をストレージに保存し、そのパスを firestore に保存する
@@ -59,6 +59,8 @@ public class changeImage : MonoBehaviour
                 product_data["quaternion_y"] = quaternion_y;
                 product_data["quaternion_z"] = quaternion_z;
                 product_data["quaternion_w"] = quaternion_w;
+                //product_data["likes"];
+                //product_data["description"]
 
                 DocumentReference addedDocRef = await firestore.Collection("products").AddAsync(product_data);
 
@@ -108,7 +110,7 @@ public class changeImage : MonoBehaviour
         });
     }
 
-    void Start()
+    public void clickBtn()
     {
         SaveImageAndPath(product_data, move_q, image);
     }
