@@ -8,7 +8,7 @@ using  UnityEngine.UI;
 using TMPro;
 public class AcquisitionColorController : MonoBehaviour
 {
-    public Color color;
+    public Color32 color;
     
     private Texture tex;
     private Texture2D texture2D;
@@ -17,15 +17,19 @@ public class AcquisitionColorController : MonoBehaviour
 
     public string _text;
 
-    private Dictionary<string, Color> word_List = new Dictionary<string, Color>();
+    public Dictionary<string, Color> word_List = new Dictionary<string, Color>();
     private int cnt;
     
     [SerializeField] private GameObject TextObj;
     [SerializeField] private Vector3 position;
+
+    private TouchScreenKeyboard keyboard;
+    private GameObject textObj1;
     private void Start()
     {
         targetTexture = new Texture2D(1, 1);
     }
+    
     void Update()
     {
 
@@ -49,13 +53,14 @@ public class AcquisitionColorController : MonoBehaviour
                 {
                     
                     Debug.Log(hit.textureCoord);
-                    position = new Vector3(hit.textureCoord.x - 0.5f, hit.textureCoord.y - 0.5f , 0f);
-                    var textObj1 = Instantiate(TextObj,Vector3.zero,Quaternion.identity);
+                    position = new Vector3(hit.textureCoord.x - 0.5f, hit.textureCoord.y - 0.5f , 0);
+                    textObj1 = Instantiate(TextObj,Vector3.zero,Quaternion.identity);
                     textObj1.transform.parent = hit.transform.GetChild(0);
                     //textObj1.GetComponent<RectTransform>().position = position;
                     textObj1.transform.localPosition = position;
-                    _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text + cnt.ToString();
-                    
+                    this.keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+                    textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text + cnt;
+                    _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
                     
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
                     texture2D = ToTexture2D(tex);
@@ -66,13 +71,16 @@ public class AcquisitionColorController : MonoBehaviour
                     StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y));
                     
                     cnt++;
-                    
-                    
 
                 }
                 
             }
 
+        }
+
+        if (textObj1 != null)
+        {
+            textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text + cnt;
         }
     }
 

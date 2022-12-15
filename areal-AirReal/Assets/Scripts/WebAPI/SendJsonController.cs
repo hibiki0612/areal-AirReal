@@ -4,41 +4,26 @@ using System.IO;
 using Kogane;
 using UnityEngine.Networking;
 using System.Text;
-
+using System;
 
 public class SendJsonController : MonoBehaviour
 {
-    
-    
-    private Dictionary<string, string> dictionary1;
-    private string RGBString;
-    private List<string> human;
 
-    private void SendJsonButton()
+    [Serializable]
+    private sealed class Data
     {
+        public string word = "human, antenna";
+        public string rgb = "[56, 115, 243], [243, 148, 56]";
+        public string text = "a human, has big antenna, on the grass.";
+    }
 
-        human = new List<string> { "human", "[56, 115, 243]" };
-        
-
-        string fullText = "a human, has big antenna, on the grass.";
-        dictionary1 = new Dictionary<string, string>()
-        {
-        };
-
-        dictionary1.Add(human[0], human[1]);
-        dictionary1.Add("antenna", "[243, 148, 56]");
-        dictionary1.Add("FULL_TEXT", fullText);
-
-
-        var jsonDictionary1 = new JsonDictionary<string, string>(dictionary1);
-        var json = JsonUtility.ToJson(jsonDictionary1, true);
-        File.WriteAllText("JsonFile.json", json);
-
-
-        //postÇ∑ÇÈèàóù
+    private void Awake()
+    {
         /*
-        var url = "https://httpbin.org/post";
-        var postData = Encoding.UTF8.GetBytes(json);
+        var url      = "http://127.0.0.1:5000/image";
+        var data     = new Data();
+        var json     = JsonUtility.ToJson( data );
+        var postData = Encoding.UTF8.GetBytes( json );
 
         var request = new UnityWebRequest( url, UnityWebRequest.kHttpVerbPOST )
         {
@@ -59,6 +44,5 @@ public class SendJsonController : MonoBehaviour
         };
         */
     }
-
 
 }

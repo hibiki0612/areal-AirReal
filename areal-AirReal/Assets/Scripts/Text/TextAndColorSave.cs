@@ -1,36 +1,41 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using  UnityEngine.UI;
 
 public class TextAndColorSave : MonoBehaviour
 {
-    [SerializeField] private Color color;
-    [SerializeField] private string text;
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-#if UNITY_EDITOR
-            if (EventSystem.current.IsPointerOverGameObject()) return;
-#else
-	                    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))return;
-#endif
-            Vector3 touchPos = Input.GetTouch(0).position;
-            
-            Ray ray = Camera.main.ScreenPointToRay(touchPos);
-            
-            RaycastHit hit;
+    
+    [SerializeField] private AcquisitionColorController acquisitionColorController;
+    [SerializeField] private Text text;
+    
+    private Dictionary<string, Color> dictionary = new Dictionary<string, Color>();
 
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.transform.tag == "PaintCanvas")
-                {
-                    color = this.gameObject.GetComponent<AcquisitionColorController>().color;
-                    text = this.gameObject.GetComponent<InputTextController>()._text;
-                    
-                }
-            }
+    private string _text;
+    
+    public string word_str;
+    public string color_str;
+    
+    
+    public void SaveButton()
+    {
+        dictionary = acquisitionColorController.word_List;
+
+        foreach (var word in dictionary)
+        {
+            word_str = word_str + ',' + word.Key;
+            color_str = color_str + ',' + word.Value;
         }
+        
+        Debug.Log(word_str);
+        Debug.Log((color_str));
+    }
+
+    public void TextSaveButton()
+    {
+        _text = text.text;
+        Debug.Log(_text);
     }
 }
