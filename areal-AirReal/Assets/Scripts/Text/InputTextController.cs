@@ -6,9 +6,11 @@ using TMPro;
 
 public class InputTextController : MonoBehaviour
 {
-
+    public string _text;
     [SerializeField] private GameObject TextObj;
     [SerializeField] private Vector3 position;
+
+    
     void Start()
     {
 
@@ -33,12 +35,14 @@ public class InputTextController : MonoBehaviour
             {
                 if (hit.transform.tag == "PaintCanvas")
                 {
+
                     Debug.Log(hit.textureCoord);
-                    position = new Vector3(hit.textureCoord.x - 0.5f, hit.textureCoord.y - 0.5f , 1.9f);
+                    position = new Vector3(hit.textureCoord.x - 0.5f, hit.textureCoord.y - 0.5f , 0f);
                     var textObj1 = Instantiate(TextObj,Vector3.zero,Quaternion.identity);
                     textObj1.transform.parent = hit.transform.GetChild(0);
-                    textObj1.GetComponent<RectTransform>().position = position;
-                    
+                    //textObj1.GetComponent<RectTransform>().position = position;
+                    textObj1.transform.localPosition = position;
+                    _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
                 }
             }
         }

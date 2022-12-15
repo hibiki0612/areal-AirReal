@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5285,6 +5285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36fa359c4d409a3439e0609f71a8dee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: 
   TextObj: {fileID: 7065425499567593559, guid: 8c3b9fb899ddecd44bb72cf98898993f, type: 3}
   position: {x: 0, y: 0, z: 0}
 --- !u!114 &1599345764
@@ -5300,6 +5301,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0, b: 0, a: 0}
+  _text: 
+  TextObj: {fileID: 0}
+  position: {x: 0, y: 0, z: 0}
 --- !u!114 &1599345765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5818,6 +5822,7 @@ GameObject:
   - component: {fileID: 1812259058}
   - component: {fileID: 1812259060}
   - component: {fileID: 1812259061}
+  - component: {fileID: 1812259062}
   m_Layer: 5
   m_Name: TextPanel
   m_TagString: Untagged
@@ -5897,6 +5902,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0, b: 0, a: 0}
+  _text: 
+  TextObj: {fileID: 7065425499567593559, guid: 8c3b9fb899ddecd44bb72cf98898993f, type: 3}
+  position: {x: 0, y: 0, z: 0}
 --- !u!114 &1812259061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5904,13 +5912,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812259056}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36fa359c4d409a3439e0609f71a8dee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: 
   TextObj: {fileID: 7065425499567593559, guid: 8c3b9fb899ddecd44bb72cf98898993f, type: 3}
   position: {x: 0, y: 0, z: 0}
+--- !u!114 &1812259062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812259056}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e125f0a9a6c14cec92bef288ed330b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 0, a: 0}
+  text: 
 --- !u!1 &1841009744
 GameObject:
   m_ObjectHideFlags: 0
@@ -7482,7 +7505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8343829451630964133
 Transform:
   m_ObjectHideFlags: 0

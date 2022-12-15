@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.IO;
+using System.Linq;
 using  UnityEngine.UI;
+using TMPro;
 public class AcquisitionColorController : MonoBehaviour
 {
     public Color color;
@@ -13,6 +15,13 @@ public class AcquisitionColorController : MonoBehaviour
 
     private Texture2D targetTexture;
 
+    public string _text;
+
+    private Dictionary<string, Color> word_List = new Dictionary<string, Color>();
+    private int cnt;
+    
+    [SerializeField] private GameObject TextObj;
+    [SerializeField] private Vector3 position;
     private void Start()
     {
         targetTexture = new Texture2D(1, 1);
@@ -39,15 +48,27 @@ public class AcquisitionColorController : MonoBehaviour
                 if (hit.transform.tag == "PaintCanvas")
                 {
                     
+                    Debug.Log(hit.textureCoord);
+                    position = new Vector3(hit.textureCoord.x - 0.5f, hit.textureCoord.y - 0.5f , 0f);
+                    var textObj1 = Instantiate(TextObj,Vector3.zero,Quaternion.identity);
+                    textObj1.transform.parent = hit.transform.GetChild(0);
+                    //textObj1.GetComponent<RectTransform>().position = position;
+                    textObj1.transform.localPosition = position;
+                    _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text + cnt.ToString();
+                    
+                    
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
                     texture2D = ToTexture2D(tex);
                     
-
                     var png = texture2D.EncodeToPNG();
                     File.WriteAllBytes("Assets/Image/paint.png", png);
                     
                     StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y));
-                                        
+                    
+                    cnt++;
+                    
+                    
+
                 }
                 
             }
@@ -64,7 +85,9 @@ public class AcquisitionColorController : MonoBehaviour
         targetTexture.ReadPixels(new Rect(x,y, 1, 1), 0, 0);
 
         color = targetTexture.GetPixel(0, 0);
-
+        word_List.Add(_text,color);
+        Debug.Log(color);
+        Debug.Log((_text));
     }
 
 
