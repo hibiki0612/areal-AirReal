@@ -966,7 +966,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1175, y: -122.79}
+  m_AnchoredPosition: {x: 1875, y: -122.79}
   m_SizeDelta: {x: 250, y: 245.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &322282317
@@ -2202,6 +2202,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1165976503}
+        m_TargetAssemblyTypeName: SendJsonController, Assembly-CSharp
+        m_MethodName: SaveObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &674662351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2564,7 +2576,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1875, y: -122.79}
+  m_AnchoredPosition: {x: 475, y: -122.79}
   m_SizeDelta: {x: 250, y: 245.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &790324452
@@ -3453,7 +3465,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 995298147}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1532b32c9929ea141974a1e47a80bb2c, type: 3}
   m_Name: 
@@ -3510,7 +3522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1525, y: -122.79}
+  m_AnchoredPosition: {x: 2225, y: -122.79}
   m_SizeDelta: {x: 250, y: 245.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1003961650
@@ -3825,7 +3837,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 825, y: -122.79}
+  m_AnchoredPosition: {x: 1525, y: -122.79}
   m_SizeDelta: {x: 250, y: 245.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1096892965
@@ -4001,6 +4013,11 @@ MonoBehaviour:
   textAndColorSave: {fileID: 1165976501}
   _sentence: 
   _text: {fileID: 1579372238}
+  paintCanvasCreate: {fileID: 674662349}
+  mosaic: {fileID: 2100000, guid: 9d6d7b56ab0b2ce4d8f2d7bb269c1e31, type: 2}
+  paper: {fileID: 2100000, guid: 1b659faa85de54b0683b8d8dd9b79102, type: 2}
+  span: 1
+  resultActive: 0
 --- !u!114 &1165976504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4278,7 +4295,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 2225, y: -122.79}
+  m_AnchoredPosition: {x: 1175, y: -122.79}
   m_SizeDelta: {x: 250, y: 245.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1289936673
@@ -6684,7 +6701,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 475, y: -122.79}
+  m_AnchoredPosition: {x: 825, y: -122.79}
   m_SizeDelta: {x: 250, y: 245.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1843054990
@@ -8052,33 +8069,13 @@ GameObject:
   - component: {fileID: 9114170436561731313}
   - component: {fileID: 9114170436561731312}
   - component: {fileID: 9114170436561731279}
-  - component: {fileID: 9114170436561731278}
   m_Layer: 0
   m_Name: AssumedLotation
   m_TagString: PaintCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &9114170436561731278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9114170436561731277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04cc1b9412eea6e4a8798f4b2f88b4ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  paintSet:
-  - mainTextureName: _MainTex
-    normalTextureName: _BumpMap
-    heightTextureName: _ParallaxMap
-    useMainPaint: 1
-    useNormalPaint: 1
-    useHeightPaint: 1
+  m_IsActive: 0
 --- !u!64 &9114170436561731279
 MeshCollider:
   m_ObjectHideFlags: 0

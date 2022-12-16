@@ -15,6 +15,22 @@ public class SendJsonController : MonoBehaviour
     private string color_str;
     public string _sentence;
     [SerializeField] private Text _text;
+    private GameObject TargetObject;
+    [SerializeField] private PaintCanvasCreate paintCanvasCreate;
+    [SerializeField] private Material mosaic;
+    [SerializeField] private Material paper;
+
+    public float span = 1f;
+    private float currentTime = 0f;
+    private int cnt = 64;
+    private bool MosaicActive;
+
+    //‰æ‘œ‚ª•Ô‚Á‚Ä‚«‚½‚çƒIƒ“
+    [SerializeField] bool resultActive =false;
+    public void SaveObject()
+    {
+        TargetObject = paintCanvasCreate.TargetObj;
+    }
 
     [Serializable]
     private sealed class Data
@@ -27,7 +43,10 @@ public class SendJsonController : MonoBehaviour
 
     public void GanerateButton()
     {
-
+        MosaicActive = true;
+        paper = TargetObject.GetComponent<MeshRenderer>().material;
+        mosaic.mainTexture = TargetObject.GetComponent<MeshRenderer>().material.mainTexture;
+        TargetObject.GetComponent<MeshRenderer>().material = mosaic;
         string fileName = "/paint.png";
         string filePath = Application.dataPath + "/" + fileName;
         // ‰æ‘œƒtƒ@ƒCƒ‹‚ğbyte”z—ñ‚ÉŠi”[
@@ -73,5 +92,58 @@ public class SendJsonController : MonoBehaviour
         };
     }
 
+
+
+
+    void Update()
+    {
+        if (MosaicActive)
+        {
+            if (!resultActive)
+            {
+                if (cnt >= 2)
+                {
+                    currentTime += Time.deltaTime;
+
+                    if (currentTime > span / 10)
+                    {
+
+                        TargetObject.GetComponent<MeshRenderer>().material.SetFloat("_MosaicResolution", cnt);
+                        currentTime = 0f;
+                        cnt--;
+                    }
+
+                }
+            }
+
+            //‰æ‘œ¶¬‚ªI‚í‚Á‚½‚ç
+            if (resultActive)
+            {
+                if (cnt <= 64)
+                {
+                    currentTime += Time.deltaTime;
+
+                    if (currentTime > span/10)
+                    {
+                        //•Ô‚Á‚Ä‚«‚½‰æ‘œ‚ğ“\‚é
+                        //TargetObject.GetComponent<MeshRenderer>().material.mainTexture = ;
+                        cnt++;
+
+                        TargetObject.GetComponent<MeshRenderer>().material.SetFloat("_MosaicResolution", cnt);
+                        currentTime = 0f;
+                        
+                    }
+                }
+                if(cnt == 64)
+                {
+                    TargetObject.GetComponent<MeshRenderer>().material = paper;
+                    //•Ô‚Á‚Ä‚«‚½‰æ‘œ‚ğ“\‚é
+                    //TargetObject.GetComponent<MeshRenderer>().material.mainTexture = ;
+                }
+            }
+
+        }
+
+    }
 
 }
