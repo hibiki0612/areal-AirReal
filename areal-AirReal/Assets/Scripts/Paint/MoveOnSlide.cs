@@ -40,27 +40,38 @@ public class MoveOnSlide : MonoBehaviour
                     obj.transform.rotation = Camera.main.transform.rotation;
 
                 }
+            }
+            
+            else if (Input.touchCount == 2)
+            {
+                Touch touch1 = Input.GetTouch(0);
+                Touch touch2 = Input.GetTouch(1);
 
-                else if (Input.touchCount == 2)
+                if (touch1.phase == TouchPhase.Moved && touch2.phase == TouchPhase.Moved)
                 {
-                    Touch touch1 = Input.GetTouch(0);
-                    Touch touch2 = Input.GetTouch(1);
+                    Vector2 touch1PrevPos = touch1.position - touch1.deltaPosition;
+                    Vector2 touch2PrevPos = touch2.position - touch2.deltaPosition;
 
-                    if (touch1.phase == TouchPhase.Moved && touch2.phase == TouchPhase.Moved)
+                    float prevTouchDeltaMag = (touch1PrevPos - touch2PrevPos).magnitude;
+                    float touchDeltaMag = (touch1.position - touch2.position).magnitude;
+
+                    float deltaMagnitudeDiff =  touchDeltaMag - prevTouchDeltaMag;
+                    
+                    if (obj.transform.localScale.x > 0.5f)
                     {
-                        Vector2 touch1PrevPos = touch1.position - touch1.deltaPosition;
-                        Vector2 touch2PrevPos = touch2.position - touch2.deltaPosition;
-
-                        float prevTouchDeltaMag = (touch1PrevPos - touch2PrevPos).magnitude;
-                        float touchDeltaMag = (touch1.position - touch2.position).magnitude;
-
-                        float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
-
-                        obj.transform.Rotate(0, 0, deltaMagnitudeDiff * Time.deltaTime);
-                        obj.transform.localScale += Vector3.one * deltaMagnitudeDiff * Time.deltaTime;
+                        obj.transform.localScale += Vector3.one * deltaMagnitudeDiff * Time.deltaTime* 0.25f;
                     }
+                    else
+                    {
+                        if (deltaMagnitudeDiff > 0)
+                        {
+                            obj.transform.localScale += Vector3.one * deltaMagnitudeDiff * Time.deltaTime* 0.25f;
+                        }
+                    }
+                    
                 }
             }
+            
             
             /*
             Ray ray = Camera.main.ScreenPointToRay(touch.position);
