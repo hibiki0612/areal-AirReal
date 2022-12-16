@@ -11,7 +11,7 @@ public class TextAndColorSave : MonoBehaviour
     [SerializeField] private AcquisitionColorController acquisitionColorController;
     [SerializeField] private Text text;
     
-    public Dictionary<string, Color> _Color_dictionary = new Dictionary<string, Color>();
+    public Dictionary<string, Color32> _Color_dictionary = new Dictionary<string, Color32>();
      
     public string _sentence;
     

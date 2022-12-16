@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using  UnityEngine.UI;
 using TMPro;
+using UnityEditor;
 public class AcquisitionColorController : MonoBehaviour
 {
     public Color32 color;
@@ -17,7 +18,7 @@ public class AcquisitionColorController : MonoBehaviour
 
     public string _text;
 
-    public Dictionary<string, Color> word_List = new Dictionary<string, Color>();
+    public Dictionary<string, Color32> word_List = new Dictionary<string, Color32>();
     private int cnt;
     
     [SerializeField] private GameObject TextObj;
@@ -67,7 +68,9 @@ public class AcquisitionColorController : MonoBehaviour
                     _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
                     texture2D = ToTexture2D(tex);
-                    
+
+                    AssetDatabase.DeleteAsset(Application.dataPath + "/paint.png");
+
                     var png = texture2D.EncodeToPNG();
                     File.WriteAllBytes(Application.dataPath +"/paint.png", png);
                     
@@ -97,17 +100,12 @@ public class AcquisitionColorController : MonoBehaviour
         color = targetTexture.GetPixel(0, 0);
 
         var judgement = JudgmentColor(color, colorList);
-        if (judgement)
-        {
-            Destroy(textObj1);
-        }
-        else
-        {
-            word_List.Add(_text, color);
-            colorList.Add(color);
-            Debug.Log(color);
-            Debug.Log((_text));
-        }
+
+        word_List.Add(_text, color);
+        colorList.Add(color);
+        Debug.Log(color);
+        Debug.Log((_text));
+        
 
     }
 
