@@ -5601,8 +5601,9 @@ GameObject:
   - component: {fileID: 1599345762}
   - component: {fileID: 1599345766}
   - component: {fileID: 1599345765}
+  - component: {fileID: 1599345763}
   m_Layer: 5
-  m_Name: GaneratePanel
+  m_Name: ViewPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5628,6 +5629,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -824.42}
   m_SizeDelta: {x: 0, y: -1648.8346}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1599345763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599345761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061da3c9935be7845aa89a12e34de247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Like: {fileID: 2230858345702023424, guid: 8f7e60cfe5373b54cb9fbc0e01afe812, type: 3}
 --- !u!114 &1599345765
 MonoBehaviour:
   m_ObjectHideFlags: 0

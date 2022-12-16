@@ -25,6 +25,8 @@ public class AcquisitionColorController : MonoBehaviour
 
     private TouchScreenKeyboard keyboard;
     private GameObject textObj1;
+
+    private List<Color> colorList = new List<Color>();
     private void Start()
     {
         targetTexture = new Texture2D(1, 1);
@@ -58,9 +60,7 @@ public class AcquisitionColorController : MonoBehaviour
                     textObj1.transform.parent = hit.transform.GetChild(0);
                     //textObj1.GetComponent<RectTransform>().position = position;
                     textObj1.transform.localPosition = position;
-                    this.keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
-                    textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text + cnt;
-                    _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
                     texture2D = ToTexture2D(tex);
                     
@@ -92,9 +92,23 @@ public class AcquisitionColorController : MonoBehaviour
         targetTexture.ReadPixels(new Rect(x,y, 1, 1), 0, 0);
 
         color = targetTexture.GetPixel(0, 0);
-        word_List.Add(_text, color);
-        Debug.Log(color);
-        Debug.Log((_text));
+
+        var judgement = JudgmentColor(color, colorList);
+        if (judgement)
+        {
+            Destroy(textObj1);
+        }
+        else
+        {
+            this.keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+            textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text + cnt;
+            _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+            word_List.Add(_text, color);
+            colorList.Add(color);
+            Debug.Log(color);
+            Debug.Log((_text));
+        }
+
     }
 
 
@@ -113,5 +127,26 @@ public class AcquisitionColorController : MonoBehaviour
         result.Apply();
         RenderTexture.active = currentRT;
         return result;
+    }
+
+    private bool JudgmentColor(Color color,List<Color> colorList)
+    {
+        bool Judgment = false;
+        foreach(Color saveColor in colorList)
+        {
+            float diffR = Mathf.Abs(saveColor.r - color.r);
+            float diffG = Mathf.Abs(saveColor.g - color.g);
+            float diffB = Mathf.Abs(saveColor.b - color.b);
+            if (diffR <= 0.1f && diffG <= 0.1f && diffB <= 0.1f)
+            {
+                // “¯‚¶F‚É‹ß‚¢ê‡‚ÍA‰½‚à‚µ‚È‚¢
+                Judgment = true;
+                Debug.Log(Judgment);
+                break;
+            }
+            Debug.Log(Judgment);
+        }
+        return Judgment;
+
     }
 }
