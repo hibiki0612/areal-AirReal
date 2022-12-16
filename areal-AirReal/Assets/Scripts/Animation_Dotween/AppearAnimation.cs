@@ -8,7 +8,7 @@ public class AppearAnimation : MonoBehaviour
     {
         this.transform.localScale = Vector3.zero;
         this.transform.DOScale(1, 3f).SetEase(Ease.OutBack);
-        transform.DOLocalRotate(new Vector3(0, 360f, 0), 3f, RotateMode.FastBeyond360)
+        transform.DOLocalRotate(new Vector3(0, 360f, 0), 3f, RotateMode.LocalAxisAdd)
     .SetEase(Ease.OutCubic);
     
 

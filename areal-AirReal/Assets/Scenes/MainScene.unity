@@ -5601,8 +5601,6 @@ GameObject:
   - component: {fileID: 1599345762}
   - component: {fileID: 1599345766}
   - component: {fileID: 1599345765}
-  - component: {fileID: 1599345764}
-  - component: {fileID: 1599345763}
   m_Layer: 5
   m_Name: GaneratePanel
   m_TagString: Untagged
@@ -5630,39 +5628,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -824.42}
   m_SizeDelta: {x: 0, y: -1648.8346}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1599345763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599345761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36fa359c4d409a3439e0609f71a8dee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _text: 
-  TextObj: {fileID: 7065425499567593559, guid: 8c3b9fb899ddecd44bb72cf98898993f, type: 3}
-  position: {x: 0, y: 0, z: 0}
---- !u!114 &1599345764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599345761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38878a031be4f4dcf9280de74d125ee9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color:
-    serializedVersion: 2
-    rgba: 0
-  _text: 
-  TextObj: {fileID: 0}
-  position: {x: 0, y: 0, z: 0}
 --- !u!114 &1599345765
 MonoBehaviour:
   m_ObjectHideFlags: 0
