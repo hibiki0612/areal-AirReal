@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1012087645213",
+    "project_id": "areal-71159",
+    "firebase_url": "https://areal-71159.firebaseio.com",
+    "storage_bucket": "areal-71159.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012087645213:android:bf19dd03f8fff7213b52f4",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.arealAirReal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012087645213-3i9s57mejhpiprq2vdsqa80p9769s6uk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdiJ2DwH09uCgDJSezSYQMs44bdikNCoU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012087645213-3i9s57mejhpiprq2vdsqa80p9769s6uk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1012087645213-qdhd6lnt93ung6818ppu45fpuf8euk0l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.DefaultCompany.areal-AirReal"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
