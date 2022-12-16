@@ -61,6 +61,8 @@ public class AcquisitionColorController : MonoBehaviour
                     //textObj1.GetComponent<RectTransform>().position = position;
                     textObj1.transform.localPosition = position;
                     this.keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+
+                    cnt++;
                     textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text + cnt;
                     _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
@@ -71,8 +73,7 @@ public class AcquisitionColorController : MonoBehaviour
                     
                     StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y));
                     
-                    cnt++;
-
+                    
                 }
                 
             }
