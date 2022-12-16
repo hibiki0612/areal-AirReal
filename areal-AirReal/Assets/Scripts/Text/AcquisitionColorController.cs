@@ -61,12 +61,11 @@ public class AcquisitionColorController : MonoBehaviour
                     this.keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
                     textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text + cnt;
                     _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
-                    
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
                     texture2D = ToTexture2D(tex);
                     
                     var png = texture2D.EncodeToPNG();
-                    File.WriteAllBytes("Assets/Image/paint.png", png);
+                    File.WriteAllBytes(Application.dataPath +"/paint.png", png);
                     
                     StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y));
                     
@@ -93,7 +92,7 @@ public class AcquisitionColorController : MonoBehaviour
         targetTexture.ReadPixels(new Rect(x,y, 1, 1), 0, 0);
 
         color = targetTexture.GetPixel(0, 0);
-        word_List.Add(_text,color);
+        word_List.Add(_text, color);
         Debug.Log(color);
         Debug.Log((_text));
     }

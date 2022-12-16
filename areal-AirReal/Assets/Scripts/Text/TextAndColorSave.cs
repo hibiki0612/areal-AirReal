@@ -11,31 +11,27 @@ public class TextAndColorSave : MonoBehaviour
     [SerializeField] private AcquisitionColorController acquisitionColorController;
     [SerializeField] private Text text;
     
-    private Dictionary<string, Color> dictionary = new Dictionary<string, Color>();
-
-    private string _text;
+    public Dictionary<string, Color> _Color_dictionary = new Dictionary<string, Color>();
+     
+    public string _sentence;
     
     public string word_str;
     public string color_str;
-    
+    private string _after_color;
+
     
     public void SaveButton()
     {
-        dictionary = acquisitionColorController.word_List;
+        _Color_dictionary = acquisitionColorController.word_List;
 
-        foreach (var word in dictionary)
+        foreach (var word in _Color_dictionary)
         {
+            _after_color = word.Value.ToString();
+            _after_color = _after_color.Replace("RGBA", "");
             word_str = word_str + ',' + word.Key;
-            color_str = color_str + ',' + word.Value;
+            color_str = color_str + ',' + _after_color;
         }
         
-        Debug.Log(word_str);
-        Debug.Log((color_str));
     }
 
-    public void TextSaveButton()
-    {
-        _text = text.text;
-        Debug.Log(_text);
-    }
 }
