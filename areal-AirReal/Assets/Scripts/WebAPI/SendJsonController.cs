@@ -31,10 +31,11 @@ public class SendJsonController : MonoBehaviour
         string fileName = "/paint.png";
         string filePath = Application.dataPath + "/" + fileName;
         // ‰æ‘œƒtƒ@ƒCƒ‹‚ðbyte”z—ñ‚ÉŠi”[
+        
         byte[] img = File.ReadAllBytes(filePath);
-        string img_str = BitConverter.ToString(img);
+        //string img_str = BitConverter.ToString(img);
+        string img_str = Convert.ToBase64String(img);
 
-        word_str = textAndColorSave.word_str;
         color_str = textAndColorSave.color_str;
         _sentence = _text.text;
         
@@ -71,5 +72,6 @@ public class SendJsonController : MonoBehaviour
             Debug.Log(operation.webRequest.isNetworkError);
         };
     }
+
 
 }

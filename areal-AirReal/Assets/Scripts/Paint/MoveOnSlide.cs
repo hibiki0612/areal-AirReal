@@ -26,6 +26,43 @@ public class MoveOnSlide : MonoBehaviour
 
             Touch touch = Input.touches[0];
 
+            if (Input.touchCount == 1)
+            {
+                Vector2 delta = touch.deltaPosition * 0.001f;
+                if ((delta.x > -1 && delta.y > -1) && (delta.x < 1 && delta.y < 1))
+                {
+
+
+                    Vector3 moveForward = Camera.main.transform.up * delta.y + Camera.main.transform.right * delta.x;
+
+                    obj.transform.position += moveForward;
+
+                    obj.transform.rotation = Camera.main.transform.rotation;
+
+                }
+
+                else if (Input.touchCount == 2)
+                {
+                    Touch touch1 = Input.GetTouch(0);
+                    Touch touch2 = Input.GetTouch(1);
+
+                    if (touch1.phase == TouchPhase.Moved && touch2.phase == TouchPhase.Moved)
+                    {
+                        Vector2 touch1PrevPos = touch1.position - touch1.deltaPosition;
+                        Vector2 touch2PrevPos = touch2.position - touch2.deltaPosition;
+
+                        float prevTouchDeltaMag = (touch1PrevPos - touch2PrevPos).magnitude;
+                        float touchDeltaMag = (touch1.position - touch2.position).magnitude;
+
+                        float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+
+                        obj.transform.Rotate(0, 0, deltaMagnitudeDiff * Time.deltaTime);
+                        obj.transform.localScale += Vector3.one * deltaMagnitudeDiff * Time.deltaTime;
+                    }
+                }
+            }
+            
+            /*
             Ray ray = Camera.main.ScreenPointToRay(touch.position);
             RaycastHit hit;
 
@@ -47,9 +84,10 @@ public class MoveOnSlide : MonoBehaviour
                         
                 }
                 
-               
+                
                 
             }
+            */
         }
         
 
