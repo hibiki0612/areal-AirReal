@@ -54,15 +54,22 @@ public class AcquisitionColorController : MonoBehaviour
                 if (hit.transform.tag == "PaintCanvas")
                 {
                     
-                    
-
+                    Debug.Log(hit.textureCoord);
+                    position = new Vector3(hit.textureCoord.x - 0.5f, hit.textureCoord.y - 0.5f , 0);
+                    textObj1 = Instantiate(TextObj,Vector3.zero,Quaternion.identity);
+                    textObj1.transform.parent = hit.transform.GetChild(0);
+                    //textObj1.GetComponent<RectTransform>().position = position;
+                    textObj1.transform.localPosition = position;
+                    this.keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+                    textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text + cnt;
+                    _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
                     texture2D = ToTexture2D(tex);
                     
                     var png = texture2D.EncodeToPNG();
                     File.WriteAllBytes(Application.dataPath +"/paint.png", png);
                     
-                    StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y,hit));
+                    StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y));
                     
                     cnt++;
 
@@ -78,7 +85,7 @@ public class AcquisitionColorController : MonoBehaviour
         }
     }
 
-    private IEnumerator GetColorCoroutine(int x, int y ,RaycastHit hit)
+    private IEnumerator GetColorCoroutine(int x, int y)
 
     {
 
@@ -95,15 +102,6 @@ public class AcquisitionColorController : MonoBehaviour
         }
         else
         {
-            Debug.Log(hit.textureCoord);
-            position = new Vector3(hit.textureCoord.x - 0.5f, hit.textureCoord.y - 0.5f, 0);
-            textObj1 = Instantiate(TextObj, Vector3.zero, Quaternion.identity);
-            textObj1.transform.parent = hit.transform.GetChild(0);
-            //textObj1.GetComponent<RectTransform>().position = position;
-            textObj1.transform.localPosition = position;
-            this.keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
-            textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text + cnt;
-            _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
             word_List.Add(_text, color);
             colorList.Add(color);
             Debug.Log(color);
