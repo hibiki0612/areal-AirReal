@@ -19,4 +19,11 @@ public class AppearLoading : MonoBehaviour
         obj.transform.localScale = Vector3.zero;
         obj.transform.DOScale(0.5f, 3f);
     }
+    
+    public  void LoadingDisAppear()
+    {
+        TargetObject.transform.GetChild(4).gameObject.SetActive(true);
+        var obj = TargetObject.transform.GetChild(4).gameObject;
+        obj.transform.DOScale(0f, 2f);
+    }
 }

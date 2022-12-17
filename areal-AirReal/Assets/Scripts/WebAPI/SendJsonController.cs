@@ -26,8 +26,10 @@ public class SendJsonController : MonoBehaviour
     private int cnt = 64;
     private bool MosaicActive;
 
+    [SerializeField] private AppearLoading appearLoading;
+
     [SerializeField] private string img_str;
-    //‰æ‘œ‚ª•Ô‚Á‚Ä‚«‚½‚çƒIƒ“
+    //ï¿½æ‘œï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½
     [SerializeField] bool resultActive =false;
     public void SaveObject()
     {
@@ -55,22 +57,24 @@ public class SendJsonController : MonoBehaviour
     IEnumerator image2image()
     {
         string fileName = "/paint.png";
-        string filePath = Application.dataPath + "/" + fileName;
-        // ‰æ‘œƒtƒ@ƒCƒ‹‚ğbyte”z—ñ‚ÉŠi”[
+        string filePath = Application.persistentDataPath + "/" + fileName;
+        // ï¿½æ‘œï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½byteï¿½zï¿½ï¿½ÉŠiï¿½[
 
         byte[] img = File.ReadAllBytes(filePath);
         //string img_str = BitConverter.ToString(img);
         img_str = Convert.ToBase64String(img);
 
+        word_str = textAndColorSave.word_str;
+        Debug.Log((textAndColorSave.word_str));
         color_str = textAndColorSave.color_str;
         _sentence = _text.text;
 
-        var url = "http://127.0.0.1:5000/image";
+        var url = "http://172.16.200.148:8080/image";
         var data = new Data();
 
-        //data.word = word_str;
+        data.word = word_str;
         data.rgb = color_str;
-        //data.text = _sentence;
+        data.text = _sentence;
         data.image = img_str;
         Debug.Log(data.word);
         Debug.Log(data.rgb);
@@ -98,17 +102,17 @@ public class SendJsonController : MonoBehaviour
             Debug.Log(operation.webRequest.isHttpError);
             Debug.Log(operation.webRequest.isNetworkError);
             resultActive = true;
-
+            appearLoading.LoadingDisAppear();
         };
 
         texture = new Texture2D(1, 1);
         byte[] bytes = System.Convert.FromBase64String(request.downloadHandler.text);
         texture.LoadImage(bytes);
         var png = texture.EncodeToPNG();
-        //PNGŒ`®‚ÅƒGƒ“ƒR[ƒh
+        //PNGï¿½`ï¿½ï¿½ï¿½ÅƒGï¿½ï¿½ï¿½Rï¿½[ï¿½h
         
         File.WriteAllBytes("test.png",png);
-        //ƒIƒuƒWƒFƒNƒg‚É‰æ‘œ‚ğ•\¦
+        //ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½É‰æ‘œï¿½ï¿½\ï¿½ï¿½
         //TargetObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
         
     }
@@ -167,7 +171,7 @@ public class SendJsonController : MonoBehaviour
                 
             }
 
-            //‰æ‘œ¶¬‚ªI‚í‚Á‚½‚ç
+            //ï¿½æ‘œï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (resultActive)
             {
                 if (cnt >= 5)
@@ -197,7 +201,7 @@ public class SendJsonController : MonoBehaviour
 
                         if (currentTime > span / 20)
                         {
-                            //•Ô‚Á‚Ä‚«‚½‰æ‘œ‚ğ“\‚é
+                            //ï¿½Ô‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½æ‘œï¿½ï¿½\ï¿½ï¿½
                             TargetObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             cnt++;
 
@@ -209,7 +213,7 @@ public class SendJsonController : MonoBehaviour
                     if (cnt == 64)
                     {
                         TargetObject.GetComponent<MeshRenderer>().material = paper;
-                        //•Ô‚Á‚Ä‚«‚½‰æ‘œ‚ğ“\‚é
+                        //ï¿½Ô‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½æ‘œï¿½ï¿½\ï¿½ï¿½
                         TargetObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                     }
                 }
