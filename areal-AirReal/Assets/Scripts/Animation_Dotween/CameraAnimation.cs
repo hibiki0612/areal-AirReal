@@ -46,8 +46,7 @@ public class CameraAnimation : MonoBehaviour
 #endif
 
             Vector3 touchPos = Input.GetTouch(0).position;
-
-
+            
             Ray ray = Camera.main.ScreenPointToRay(touchPos);
             RaycastHit hit;
 
