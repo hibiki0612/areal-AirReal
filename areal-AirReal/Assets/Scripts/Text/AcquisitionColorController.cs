@@ -71,7 +71,7 @@ public class AcquisitionColorController : MonoBehaviour
 
 
                     var png = texture2D.EncodeToPNG();
-                    File.WriteAllBytes(Application.dataPath +"/paint.png", png);
+                    File.WriteAllBytes(Application.persistentDataPath +"/paint.png", png);
                     
                     StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y));
                     

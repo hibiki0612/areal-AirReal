@@ -55,7 +55,7 @@ public class SendJsonController : MonoBehaviour
     IEnumerator image2image()
     {
         string fileName = "/paint.png";
-        string filePath = Application.dataPath + "/" + fileName;
+        string filePath = Application.persistentDataPath + "/" + fileName;
         // �摜�t�@�C����byte�z��Ɋi�[
 
         byte[] img = File.ReadAllBytes(filePath);
