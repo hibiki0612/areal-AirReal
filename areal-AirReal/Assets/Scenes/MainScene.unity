@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.4439403, g: 0.4931519, b: 0.5722083, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1239,7 +1239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f7cd91bf29c499f45b4462001944a3b2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 35ec1063199cc194cab8abc0de29581f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4017,6 +4017,7 @@ MonoBehaviour:
   mosaic: {fileID: 2100000, guid: 9d6d7b56ab0b2ce4d8f2d7bb269c1e31, type: 2}
   paper: {fileID: 2100000, guid: 1b659faa85de54b0683b8d8dd9b79102, type: 2}
   span: 1
+  appearLoading: {fileID: 1165976504}
   img_str: 
   resultActive: 0
 --- !u!114 &1165976504
@@ -5732,7 +5733,6 @@ GameObject:
   - component: {fileID: 1599345762}
   - component: {fileID: 1599345766}
   - component: {fileID: 1599345765}
-  - component: {fileID: 1599345763}
   - component: {fileID: 1599345764}
   m_Layer: 5
   m_Name: GeneratePanel
@@ -5761,19 +5761,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -824.42}
   m_SizeDelta: {x: 0, y: -1648.8346}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1599345763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599345761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061da3c9935be7845aa89a12e34de247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Like: {fileID: 2230858345702023424, guid: 8f7e60cfe5373b54cb9fbc0e01afe812, type: 3}
 --- !u!82 &1599345764
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6468,6 +6455,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 0
   _text: 
+  word: []
   TextObj: {fileID: 7065425499567593559, guid: 8c3b9fb899ddecd44bb72cf98898993f, type: 3}
   position: {x: 0, y: 0, z: 0}
 --- !u!1 &1840977878

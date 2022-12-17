@@ -20,6 +20,7 @@ public class AcquisitionColorController : MonoBehaviour
 
     public Dictionary<string, Color32> word_List = new Dictionary<string, Color32>();
     private int cnt;
+    public List<string> word; 
     
     [SerializeField] private GameObject TextObj;
     [SerializeField] private Vector3 position;
@@ -64,15 +65,15 @@ public class AcquisitionColorController : MonoBehaviour
                     this.keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
 
                     cnt++;
-                    textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text + cnt;
+                    textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text;
                     _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+                    Debug.Log("_text" + _text);
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
                     texture2D = ToTexture2D(tex);
 
-                    AssetDatabase.DeleteAsset(Application.dataPath + "/paint.png");
 
                     var png = texture2D.EncodeToPNG();
-                    File.WriteAllBytes(Application.dataPath +"/paint.png", png);
+                    File.WriteAllBytes(Application.persistentDataPath +"/paint.png", png);
                     
                     StartCoroutine(GetColorCoroutine((int)touchPos.x, (int)touchPos.y));
                     
@@ -83,10 +84,18 @@ public class AcquisitionColorController : MonoBehaviour
 
         }
 
-        if (textObj1 != null)
+        if (textObj1 != null && this.keyboard != null )
         {
-            textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text + cnt;
+            textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text;
         }
+        
+        if (this.keyboard != null && this.keyboard.status == TouchScreenKeyboard.Status.Done)
+        {
+            word.Add(this.keyboard.text);
+            print(this.keyboard.text);
+            this.keyboard = null;
+        }
+
     }
 
     private IEnumerator GetColorCoroutine(int x, int y)
@@ -100,8 +109,8 @@ public class AcquisitionColorController : MonoBehaviour
         color = targetTexture.GetPixel(0, 0);
 
         var judgement = JudgmentColor(color, colorList);
-
-        word_List.Add(_text, color);
+        
+        word_List.Add(_text + cnt.ToString(), color);
         colorList.Add(color);
         Debug.Log(color);
         Debug.Log((_text));
