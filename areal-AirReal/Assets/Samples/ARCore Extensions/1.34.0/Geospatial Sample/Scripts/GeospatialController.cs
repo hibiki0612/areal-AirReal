@@ -92,7 +92,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         /// <summary>
         /// UI element for adding a new anchor at current location.
         /// </summary>
-        public Button SetPaintingButton;
+        //public Button //SetPaintingButton;
 
         /// <summary>
         /// Text displaying in a snack bar at the bottom of the screen.
@@ -240,7 +240,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
 
             _isReturning = false;
             _enablingGeospatial = false;
-            SetPaintingButton.gameObject.SetActive(false);
+            //SetPaintingButton.gameObject.SetActive(false);
             //SaveButton.gameObject.SetActive(false);
             _localizationPassedTime = 0f;
             _isLocalizing = true;
@@ -366,7 +366,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 {
                     _isLocalizing = true;
                     _localizationPassedTime = 0f;
-                    SetPaintingButton.gameObject.SetActive(false);
+                    //SetPaintingButton.gameObject.SetActive(false);
                     //SaveButton.gameObject.SetActive(false);
                     foreach (var go in _anchorObjects)
                     {
@@ -390,7 +390,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 // Finished localization.
                 _isLocalizing = false;
                 _localizationPassedTime = 0f;
-                SetPaintingButton.gameObject.SetActive(true);
+                //SetPaintingButton.gameObject.SetActive(true);
                 //SaveButton.gameObject.SetActive(true);
                 SnackBarText.text = _localizationSuccessMessage;
                 foreach (var go in _anchorObjects)
@@ -499,6 +499,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
             }
         }
 
+        /*
         private void PlaceGeospatialAnchor(GeospatialAnchorHistory history)
         {
             var anchor = AnchorManager.AddAnchor(history.Latitude, history.Longitude, history.Altitude, history.Heading);
@@ -519,6 +520,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                     "Failed to set {0}!", "an anchor");
             }
         }
+        */
 
         public void SetHistory(float latitude, float longitude, float altitude, Quaternion quaternion, Texture2D texture)
         {
@@ -549,7 +551,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         /* セーブ機能関連 */
         /* 「画像を設置」ボタンを押すことで押した瞬間でのカメラの位置を取得、paintTextureとともに一時保存、画像の設置を行う */
         /*
-        public void OnSetPaintingButton()
+        public void On//SetPaintingButton()
         {
             var pose = EarthManager.CameraGeospatialPose;
             Quaternion quaternion = Quaternion.AngleAxis(180f - (float)pose.Heading, Vector3.up);
@@ -557,7 +559,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
             PlaceGeospatialAnchor(newHistory);
             SetObjectLocation(newHistory);
             isSetPainting = true;
-            SetPaintingButton.gameObject.SetActive(false);
+            //SetPaintingButton.gameObject.SetActive(false);
         }
         */
         
@@ -764,7 +766,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 return;
             }
 
-            SetPaintingButton.gameObject.SetActive(false);
+            //SetPaintingButton.gameObject.SetActive(false);
 
             Debug.LogError(reason);
             SnackBarText.text = reason;
