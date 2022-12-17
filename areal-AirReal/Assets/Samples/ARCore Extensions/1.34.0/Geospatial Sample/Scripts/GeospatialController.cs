@@ -72,7 +72,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         /// <summary>
         /// A 3D object that presents an Geospatial Anchor.
         /// </summary>
-        public GameObject GeospatialPrefab;
+        public GameObject QuadPrefab;
 
         /// <summary>
         /// A 3D object that present an Geospatial Terrain Anchor.
@@ -92,7 +92,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         /// <summary>
         /// UI element for adding a new anchor at current location.
         /// </summary>
-        public Button SetAnchorButton;
+        public Button SetPaintingButton;
 
         /// <summary>
         /// Text displaying in a snack bar at the bottom of the screen.
@@ -159,17 +159,26 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         private bool _isReturning = false;
         private bool _isLocalizing = false;
         private bool _enablingGeospatial = false;
-        private bool _usingTerrainAnchor = false;
+
+        //private bool _usingTerrainAnchor = false;
         private float _localizationPassedTime = 0f;
         private float _configurePrepareTime = 3f;
         private List<GameObject> _anchorObjects = new List<GameObject>();
         private IEnumerator _startLocationService = null;
         private IEnumerator _asyncCheck = null;
 
+        //ロードしたデータを保存しておくリスト(データの型はGeospatialAnchorHistory)
+        private GeospatialAnchorHistoryCollection historyCollection = new GeospatialAnchorHistoryCollection();
+        //private GeospatialAnchorHistory newHistory; //保存時に新たにFirebaseに保存される緯度経度高度方位と画像
+        public getImage getimage;
+        //public changeImage changeimage;
+        //public Button SaveButton;
+        //public Texture2D paintTexture; //変換済みの画像のテクスチャが入る
+        //private bool isSetPainting; //画像を設置したかどうか
         private double objLatitude = 0;
         private double objLongitude = 0;
         private double objAltitude = 0;
-        private double objHeading = 0;
+        private Quaternion objHeading;
 
         /// <summary>
         /// Callback handling "Learn More" Button click event in Privacy Prompt.
@@ -189,21 +198,11 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         }
 
         /// <summary>
-        /// Callback handling "Set Anchor" button click event in AR View.
-        /// </summary>
-        public void OnSetAnchorClicked()
-        {
-            var pose = EarthManager.CameraGeospatialPose;
-            GeospatialAnchorHistory history = new GeospatialAnchorHistory(
-                pose.Latitude, pose.Longitude, pose.Altitude, pose.Heading);
-            var anchor = PlaceGeospatialAnchor(history, _usingTerrainAnchor);
-        }
-
-        /// <summary>
         /// Unity's Awake() method.
         /// </summary>
         public void Awake()
         {
+            
             // Lock screen to portrait.
             Screen.autorotateToLandscapeLeft = false;
             Screen.autorotateToLandscapeRight = false;
@@ -241,10 +240,13 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
 
             _isReturning = false;
             _enablingGeospatial = false;
-            SetAnchorButton.gameObject.SetActive(false);
+            SetPaintingButton.gameObject.SetActive(false);
+            //SaveButton.gameObject.SetActive(false);
             _localizationPassedTime = 0f;
             _isLocalizing = true;
             SnackBarText.text = _localizingMessage;
+
+            getimage.getAllImage();
 
             SwitchToARView(true);
         }
@@ -364,7 +366,8 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 {
                     _isLocalizing = true;
                     _localizationPassedTime = 0f;
-                    SetAnchorButton.gameObject.SetActive(false);
+                    SetPaintingButton.gameObject.SetActive(false);
+                    //SaveButton.gameObject.SetActive(false);
                     foreach (var go in _anchorObjects)
                     {
                         go.SetActive(false);
@@ -387,7 +390,8 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 // Finished localization.
                 _isLocalizing = false;
                 _localizationPassedTime = 0f;
-                SetAnchorButton.gameObject.SetActive(true);
+                SetPaintingButton.gameObject.SetActive(true);
+                //SaveButton.gameObject.SetActive(true);
                 SnackBarText.text = _localizationSuccessMessage;
                 foreach (var go in _anchorObjects)
                 {
@@ -402,6 +406,8 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
 
                     go.SetActive(true);
                 }
+
+                ResolveHistory();
             }
             else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began
                 && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
@@ -482,49 +488,111 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
             {
                 GeospatialPose geospatialPose = EarthManager.Convert(hitResults[0].pose);
                 var myPose = EarthManager.CameraGeospatialPose;
+                /*
                 GeospatialAnchorHistory history = new GeospatialAnchorHistory(
                     geospatialPose.Latitude, geospatialPose.Longitude, geospatialPose.Altitude,
                     myPose.Heading); 
 
                 var anchor = PlaceGeospatialAnchor(history, _usingTerrainAnchor);
+                */
+
             }
         }
 
-        private ARGeospatialAnchor PlaceGeospatialAnchor(GeospatialAnchorHistory history, bool terrain = false)
+        private void PlaceGeospatialAnchor(GeospatialAnchorHistory history)
         {
-            SetObjectLocation(history);
-
-            Quaternion quaternion = Quaternion.AngleAxis(180f - (float)history.Heading, Vector3.up);
-            var anchor = terrain ?
-                AnchorManager.ResolveAnchorOnTerrain(
-                    history.Latitude, history.Longitude, 0, quaternion) :
-                AnchorManager.AddAnchor(
-                    history.Latitude, history.Longitude, history.Altitude, quaternion);
+            var anchor = AnchorManager.AddAnchor(history.Latitude, history.Longitude, history.Altitude, history.Heading);
+                
             if (anchor != null)
             {
-                GameObject anchorGO = terrain ?
-                    Instantiate(TerrainPrefab, anchor.transform) :
-                    Instantiate(GeospatialPrefab, anchor.transform);
-                anchor.gameObject.SetActive(!terrain);
+                GameObject PaintQuad = Instantiate(QuadPrefab, anchor.transform);
+                PaintQuad.GetComponent<Renderer>().material.mainTexture = history.Texture;
                 _anchorObjects.Add(anchor.gameObject);
+                anchor.gameObject.SetActive(true);
+                PaintQuad.gameObject.SetActive(true);
 
-                if (terrain)
-                {
-                    StartCoroutine(CheckTerrainAnchorState(anchor));
-                }
-                else
-                {
-                    SnackBarText.text = $"{_anchorObjects.Count} Anchor(s) Set!";
-                }
+                SnackBarText.text = $"{_anchorObjects.Count} Anchor(s) Set!";
             }
             else
             {
                 SnackBarText.text = string.Format(
-                    "Failed to set {0}!", terrain ? "a terrain anchor" : "an anchor");
+                    "Failed to set {0}!", "an anchor");
+            }
+        }
+
+        public void SetHistory(float latitude, float longitude, float altitude, Quaternion quaternion, Texture2D texture)
+        {
+            GeospatialAnchorHistory history = new GeospatialAnchorHistory(latitude, longitude, altitude, quaternion, texture);
+            historyCollection.Collection.Add(history);
+        }
+
+        private void ResolveHistory()
+        {
+            if(!(historyCollection.Collection.Count > 0))
+            {
+                Debug.Log("hitoryCollectionに何も入っていません");
+                return;
+            }
+            foreach(var history in historyCollection.Collection)
+            {
+                var anchor = AnchorManager.AddAnchor(history.Latitude, history.Longitude, history.Altitude, history.Heading);
+                GameObject PaintQuad = Instantiate(QuadPrefab, anchor.transform);
+                PaintQuad.GetComponent<Renderer>().material.mainTexture = history.Texture;
+                anchor.gameObject.SetActive(true);
+                PaintQuad.SetActive(true);
+                _anchorObjects.Add(anchor.gameObject);
+            }
+            
+        }
+
+        
+        /* セーブ機能関連 */
+        /* 「画像を設置」ボタンを押すことで押した瞬間でのカメラの位置を取得、paintTextureとともに一時保存、画像の設置を行う */
+        /*
+        public void OnSetPaintingButton()
+        {
+            var pose = EarthManager.CameraGeospatialPose;
+            Quaternion quaternion = Quaternion.AngleAxis(180f - (float)pose.Heading, Vector3.up);
+            newHistory = new GeospatialAnchorHistory(pose.Latitude, pose.Longitude, pose.Altitude, quaternion, paintTexture);
+            PlaceGeospatialAnchor(newHistory);
+            SetObjectLocation(newHistory);
+            isSetPainting = true;
+            SetPaintingButton.gameObject.SetActive(false);
+        }
+        */
+        
+
+        /* セーブ機能関連 */
+        /* セーブボタンを押すことでFirebaseにnewHistoryの情報を保存する */
+        /*
+        public void OnSaveButton()
+        {
+            if(!isSetPainting)
+            {
+                Debug.Log("まだ画像を設置してません！");
+                return;
             }
 
-            return anchor;
+            Dictionary<string, object> coordinateDatas = new Dictionary<string, object> {
+                    
+                {"latitude", 0},
+                {"longitude", 0},
+                {"altitude", 0},
+            };
+
+            coordinateDatas["latitude"] = newHistory.Latitude;
+            coordinateDatas["longitude"] = newHistory.Longitude;
+            coordinateDatas["altitude"] = newHistory.Altitude;
+
+            Debug.Log(coordinateDatas["latitude"]);
+            Debug.Log(coordinateDatas["longitude"]);
+            Debug.Log(coordinateDatas["altitude"]);
+            Debug.Log(newHistory.Heading.ToString());
+
+            //changeimage.SaveImageAndPath(coordinateDatas, newHistory.Heading, newHistory.Texture);
         }
+        */
+        
 
         private void SwitchToARView(bool enable)
         {
@@ -696,7 +764,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 return;
             }
 
-            SetAnchorButton.gameObject.SetActive(false);
+            SetPaintingButton.gameObject.SetActive(false);
 
             Debug.LogError(reason);
             SnackBarText.text = reason;

@@ -137,7 +137,7 @@ public class AcquisitionColorController : MonoBehaviour
             float diffB = Mathf.Abs(saveColor.b - color.b);
             if (diffR <= 0.1f && diffG <= 0.1f && diffB <= 0.1f)
             {
-                // “¯‚¶F‚É‹ß‚¢ê‡‚ÍA‰½‚à‚µ‚È‚¢
+                // ï¿½ï¿½ï¿½ï¿½ï¿½Fï¿½É‹ß‚ï¿½ï¿½ê‡ï¿½ÍAï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
                 Judgment = true;
                 Debug.Log(Judgment);
                 break;
