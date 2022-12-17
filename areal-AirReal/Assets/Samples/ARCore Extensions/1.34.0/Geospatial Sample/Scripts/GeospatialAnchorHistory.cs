@@ -33,7 +33,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         /// <summary>
         /// The created time of this geospatial anchor.
         /// </summary>
-        public string SerializedTime;
+        //public string SerializedTime;
 
         /// <summary>
         /// Latitude of the creation pose in degrees.
@@ -53,7 +53,9 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         /// <summary>
         /// Heading of the creation pose in degrees, used to calculate the original orientation.
         /// </summary>
-        public double Heading;
+        public Quaternion Heading;
+
+        public Texture2D Texture;
 
         /// <summary>
         /// Construct an Geospatial Anchor history.
@@ -68,16 +70,17 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         /// <param name="heading">
         /// Heading of the creation pose in degrees, used to calculate the original orientation.
         /// </param>
-        public GeospatialAnchorHistory(
-            DateTime time, double latitude, double longitude, double altitude, double heading)
+        public GeospatialAnchorHistory(double latitude, double longitude, double altitude, Quaternion heading, Texture2D texture)
         {
-            SerializedTime = time.ToString();
+            //SerializedTime = time.ToString();
             Latitude = latitude;
             Longitude = longitude;
             Altitude = altitude;
             Heading = heading;
+            Texture = texture;
         }
 
+        /*
         /// <summary>
         /// Construct an Geospatial Anchor history.
         /// </summary>
@@ -92,15 +95,17 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         /// </param>
         public GeospatialAnchorHistory(
             double latitude, double longitude, double altitude, double heading) :
-            this(DateTime.Now, latitude, longitude, altitude, heading)
+            this(DetaTime.Now, latitude, longitude, altitude, heading)
         {
         }
+        
 
         /// <summary>
         /// Gets created time in DataTime format.
         /// </summary>
         public DateTime CreatedTime => Convert.ToDateTime(SerializedTime);
 
+        
         /// <summary>
         /// Overrides ToString() method.
         /// </summary>
@@ -109,6 +114,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         {
             return JsonUtility.ToJson(this);
         }
+        */
     }
 
     /// <summary>
