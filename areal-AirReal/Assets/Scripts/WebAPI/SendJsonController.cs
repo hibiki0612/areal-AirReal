@@ -26,6 +26,8 @@ public class SendJsonController : MonoBehaviour
     private int cnt = 64;
     private bool MosaicActive;
 
+    [SerializeField] private AppearLoading appearLoading;
+
     [SerializeField] private string img_str;
     //�摜���Ԃ��Ă�����I��
     [SerializeField] bool resultActive =false;
@@ -62,15 +64,17 @@ public class SendJsonController : MonoBehaviour
         //string img_str = BitConverter.ToString(img);
         img_str = Convert.ToBase64String(img);
 
+        word_str = textAndColorSave.word_str;
+        Debug.Log((textAndColorSave.word_str));
         color_str = textAndColorSave.color_str;
         _sentence = _text.text;
 
-        var url = "http://192.168.1.36:5000/image";
+        var url = "http://172.16.200.148:8080/image";
         var data = new Data();
 
-        //data.word = word_str;
+        data.word = word_str;
         data.rgb = color_str;
-        //data.text = _sentence;
+        data.text = _sentence;
         data.image = img_str;
         Debug.Log(data.word);
         Debug.Log(data.rgb);
@@ -98,7 +102,7 @@ public class SendJsonController : MonoBehaviour
             Debug.Log(operation.webRequest.isHttpError);
             Debug.Log(operation.webRequest.isNetworkError);
             resultActive = true;
-
+            appearLoading.LoadingDisAppear();
         };
 
         texture = new Texture2D(1, 1);
