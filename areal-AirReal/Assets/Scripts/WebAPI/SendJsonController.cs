@@ -7,6 +7,10 @@ using System.Text;
 using System;
 using UnityEngine.UI;
 using System.Collections;
+using Google.XR.ARCoreExtensions.Samples.Geospatial;
+using Firebase.Storage;
+using Firebase.Firestore;
+using System.Threading.Tasks;
 
 public class SendJsonController : MonoBehaviour
 {
@@ -31,6 +35,14 @@ public class SendJsonController : MonoBehaviour
     [SerializeField] private string img_str;
     //�摜���Ԃ��Ă�����I��
     [SerializeField] bool resultActive =false;
+
+    [SerializeField] private GeospatialController _geospatialController;
+    
+    
+    
+    
+    
+    
     public void SaveObject()
     {
         TargetObject = paintCanvasCreate.TargetObj;
@@ -54,6 +66,50 @@ public class SendJsonController : MonoBehaviour
         StartCoroutine(image2image());
     }
 
+    async void saveFirebase()
+    {
+        // APIを呼び出して画像の加工をする
+        // レスポンスが返ってきたらその画像をstorageに保存する
+
+        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+        FirebaseFirestore firestore = FirebaseFirestore.DefaultInstance;
+            
+        StorageReference storageRef = storage.GetReferenceFromUrl("gs://areal-71159.appspot.com");
+            
+            
+        string filename = System.Guid.NewGuid() + "test.png";
+        StorageReference changeImageRef = storageRef.Child("images/" + filename);
+                
+        // ストレージに保存するために、画像データをバイト配列に変換する
+        byte[] img_data = texture.EncodeToPNG();
+
+        await changeImageRef.PutBytesAsync(img_data).ContinueWith(async (task) =>
+        {
+            if (task.IsFaulted)
+            {
+                // 保存に失敗したときの処理
+                Debug.Log("2回目の画像の保存に失敗しました");
+            }
+            else if (task.IsCompleted)
+            {
+                Debug.Log("画像の保存に成功しました");
+                // 保存した画像のパス
+                string changeImgPath = changeImageRef.Path;
+
+                // 保存するデータ
+                Dictionary<string, object> product_data = new Dictionary<string, object> {
+                    {"changeImgPath", changeImgPath}
+                };
+                Debug.Log("docId");
+                Debug.Log(changeImage.docId);
+                DocumentReference reAddedDocRef = firestore.Collection("products").Document(changeImage.docId);
+                await reAddedDocRef.UpdateAsync(product_data);
+
+                
+                Debug.Log(reAddedDocRef.Id + "にデータが保存されました");
+            }
+        });
+    }
     IEnumerator image2image()
     {
         string fileName = "/paint.png";
@@ -63,13 +119,17 @@ public class SendJsonController : MonoBehaviour
         byte[] img = File.ReadAllBytes(filePath);
         //string img_str = BitConverter.ToString(img);
         img_str = Convert.ToBase64String(img);
+        
+        texture = new Texture2D(1, 1);
+        texture.LoadImage(img);
+        _geospatialController.OnSaveButton(texture);
 
         word_str = textAndColorSave.word_str;
         Debug.Log((textAndColorSave.word_str));
         color_str = textAndColorSave.color_str;
         _sentence = _text.text;
 
-        var url = "http://172.16.200.148:8080/image";
+        var url = "http://172.20.10.13:8080/image";
         var data = new Data();
 
         data.word = word_str;
@@ -103,18 +163,29 @@ public class SendJsonController : MonoBehaviour
             Debug.Log(operation.webRequest.isNetworkError);
             resultActive = true;
             appearLoading.LoadingDisAppear();
+            var textobj = GameObject.FindGameObjectsWithTag("Text");
+            foreach (var obj in textobj)
+            {
+                obj.SetActive(false);
+            }
+            
+           
         };
 
         texture = new Texture2D(1, 1);
         byte[] bytes = System.Convert.FromBase64String(request.downloadHandler.text);
         texture.LoadImage(bytes);
-        var png = texture.EncodeToPNG();
+
+        saveFirebase();
+
+
+        //var png = texture.EncodeToPNG();
         //PNG�`���ŃG���R�[�h
-        
-        File.WriteAllBytes("test.png",png);
+
+        //File.WriteAllBytes("test.png",png);
         //�I�u�W�F�N�g�ɉ摜��\��
         //TargetObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
-        
+
     }
 
     bool mosaicstatus = false;

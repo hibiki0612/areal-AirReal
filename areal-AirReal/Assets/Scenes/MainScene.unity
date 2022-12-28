@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e3716f74c37108a43a081ae21bafad9e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 65ca9dbbb6bd242db81eab1fdfb2af99, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1239,7 +1239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 35ec1063199cc194cab8abc0de29581f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3500b26aad0534c9e99bf0945536a949, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3783,7 +3783,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 35ec1063199cc194cab8abc0de29581f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: de56ab6dcf3424c7ea74f5660dbcea48, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4020,6 +4020,7 @@ MonoBehaviour:
   appearLoading: {fileID: 1165976504}
   img_str: 
   resultActive: 0
+  _geospatialController: {fileID: 0}
 --- !u!114 &1165976504
 MonoBehaviour:
   m_ObjectHideFlags: 0

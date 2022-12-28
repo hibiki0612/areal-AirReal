@@ -14,6 +14,9 @@ public class CameraAnimation : MonoBehaviour
 
     [SerializeField] private GameObject ScrollView;
 
+    //[SerializeField] private Material _material;
+
+    [SerializeField] private GameObject mozicControler;
     public void cameraAnimationStart()
     {
         Vector3[] path = {
@@ -30,8 +33,8 @@ public class CameraAnimation : MonoBehaviour
     
     public void MoveButton()
     {
-        CanvasQuad.GetComponent<MeshRenderer>().material.mainTexture =
-            PaintQuad.GetComponent<MeshRenderer>().material.mainTexture;
+        //CanvasQuad.GetComponent<MeshRenderer>().material.mainTexture = _material.mainTexture;
+        //PaintQuad.GetComponent<MeshRenderer>().material.mainTexture;
     }
 
     
@@ -56,6 +59,7 @@ public class CameraAnimation : MonoBehaviour
                 {
                     cameraAnimationStart();
                     ScrollView.SetActive(false);
+                    mozicControler.SetActive(true);
                 }
             }
         }

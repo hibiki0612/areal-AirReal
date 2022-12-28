@@ -169,9 +169,9 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
 
         //ロードしたデータを保存しておくリスト(データの型はGeospatialAnchorHistory)
         private GeospatialAnchorHistoryCollection historyCollection = new GeospatialAnchorHistoryCollection();
-        //private GeospatialAnchorHistory newHistory; //保存時に新たにFirebaseに保存される緯度経度高度方位と画像
+        private GeospatialAnchorHistory newHistory; //保存時に新たにFirebaseに保存される緯度経度高度方位と画像
         public getImage getimage;
-        //public changeImage changeimage;
+        public changeImage changeimage;
         //public Button SaveButton;
         //public Texture2D paintTexture; //変換済みの画像のテクスチャが入る
         //private bool isSetPainting; //画像を設置したかどうか
@@ -539,10 +539,13 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
             {
                 var anchor = AnchorManager.AddAnchor(history.Latitude, history.Longitude, history.Altitude, history.Heading);
                 GameObject PaintQuad = Instantiate(QuadPrefab, anchor.transform);
-                PaintQuad.GetComponent<Renderer>().material.mainTexture = history.Texture;
+                Material _Canvasmaterial = new Material(PaintQuad.GetComponent<Renderer>().material);
+                _Canvasmaterial.mainTexture = history.Texture;
+                PaintQuad.GetComponent<Renderer>().material = _Canvasmaterial;
                 anchor.gameObject.SetActive(true);
                 PaintQuad.SetActive(true);
                 _anchorObjects.Add(anchor.gameObject);
+                Debug.Log(PaintQuad.transform.position);
             }
             
         }
@@ -566,22 +569,20 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
 
         /* セーブ機能関連 */
         /* セーブボタンを押すことでFirebaseにnewHistoryの情報を保存する */
-        /*
-        public void OnSaveButton()
+        
+        public void OnSaveButton(Texture2D paintTexture)
         {
-            if(!isSetPainting)
-            {
-                Debug.Log("まだ画像を設置してません！");
-                return;
-            }
-
+            
             Dictionary<string, object> coordinateDatas = new Dictionary<string, object> {
                     
                 {"latitude", 0},
                 {"longitude", 0},
                 {"altitude", 0},
             };
-
+            var pose = EarthManager.CameraGeospatialPose;
+            Quaternion quaternion = Quaternion.AngleAxis(180f - (float)pose.Heading, Vector3.up);
+            newHistory = new GeospatialAnchorHistory(pose.Latitude, pose.Longitude, pose.Altitude, quaternion, paintTexture);
+            
             coordinateDatas["latitude"] = newHistory.Latitude;
             coordinateDatas["longitude"] = newHistory.Longitude;
             coordinateDatas["altitude"] = newHistory.Altitude;
@@ -591,9 +592,9 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
             Debug.Log(coordinateDatas["altitude"]);
             Debug.Log(newHistory.Heading.ToString());
 
-            //changeimage.SaveImageAndPath(coordinateDatas, newHistory.Heading, newHistory.Texture);
+            changeimage.SaveImageAndPath(coordinateDatas, newHistory.Heading, newHistory.Texture);
         }
-        */
+        
         
 
         private void SwitchToARView(bool enable)

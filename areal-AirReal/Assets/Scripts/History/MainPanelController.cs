@@ -9,7 +9,7 @@ public class MainPanelController : MonoBehaviour
 {
     [SerializeField] private GameObject PaintQuad;
 
-
+    
     public void SelectButton()
     {
         Debug.Log(("test"));

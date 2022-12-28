@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 8343829450905323035}
   - component: {fileID: 8068140577878522361}
   m_Layer: 0
-  m_Name: PaintQuad
+  m_Name: PaintQuad 1
   m_TagString: PaintCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,7 +262,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1b659faa85de54b0683b8d8dd9b79102, type: 2}
+  - {fileID: 2100000, guid: be26c9b31083a46afbce606843de4d71, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

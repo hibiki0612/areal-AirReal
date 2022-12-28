@@ -67,7 +67,7 @@ public class AcquisitionColorController : MonoBehaviour
                     cnt++;
                     textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = this.keyboard.text;
                     _text = textObj1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
-                    Debug.Log("_text" + _text);
+
                     tex = hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture;
                     texture2D = ToTexture2D(tex);
 

@@ -33,8 +33,8 @@ public class getImage : MonoBehaviour
         {
             Dictionary<string, object> DictionaryData = document.ToDictionary();
             
-            StorageReference imageRef = storageRef.Child(DictionaryData["path"].ToString());
-            Debug.Log(DictionaryData["path"]);
+            StorageReference imageRef = storageRef.Child(DictionaryData["changeImgPath"].ToString());
+            Debug.Log(DictionaryData["changeImgPath"]);
 
             _ = imageRef.GetBytesAsync(maxAllowedSize).ContinueWithOnMainThread(task =>
             {
