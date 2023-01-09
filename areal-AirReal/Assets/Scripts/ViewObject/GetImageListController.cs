@@ -12,8 +12,18 @@ using UnityEngine.XR.ARSubsystems;
 
 public class GetImageListController : MonoBehaviour
 {
-    public async void getAllImage()
+    [SerializeField] private GameObject after_paint;
+    private MeshRenderer _meshRenderer;
+    [SerializeField] private Material paintMaterial;
+
+    public List<Texture> AfterpaintList;
+    [SerializeField] List<GameObject> AfterobjList;
+    [SerializeField] private Material material;
+
+    [SerializeField] private ViewObjectController viewObjectController;
+    public async void Awake()
     {
+        _meshRenderer = after_paint.GetComponent<MeshRenderer>();
         // Firebase storage のクライアント
         FirebaseStorage storage = FirebaseStorage.DefaultInstance;
         StorageReference storageRef = storage.GetReferenceFromUrl("gs://areal-71159.appspot.com");
@@ -45,14 +55,24 @@ public class GetImageListController : MonoBehaviour
 
                     Texture2D texture = new Texture2D(128, 128);
                     texture.LoadImage(fileContents);
-                    //Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-                    //imageCanvas.sprite = sprite;
+                    Texture paintTexture = texture as Texture;
 
+                    //_meshRenderer.material.mainTexture = paintTexture;
+
+                    AfterpaintList.Add(paintTexture);
                     Debug.Log("画像を生成しました");
                 }
             });
 
         }
+        Invoke("Active", 2);
+       
 
+
+    }
+
+    private void Active()
+    {
+        viewObjectController.active = true;
     }
 }
