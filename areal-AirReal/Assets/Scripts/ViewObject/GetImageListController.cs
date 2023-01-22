@@ -1,14 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using Firebase.Extensions;
 using Firebase.Firestore;
 using Firebase.Storage;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
+
+using System;
+using System.Threading.Tasks;
 
 public class GetImageListController : MonoBehaviour
 {
@@ -17,58 +14,62 @@ public class GetImageListController : MonoBehaviour
     [SerializeField] private Material paintMaterial;
 
     public List<Texture> AfterpaintList;
-    [SerializeField] List<GameObject> AfterobjList;
+    public List<Texture> BeforepaintList;
     [SerializeField] private Material material;
 
     [SerializeField] private ViewObjectController viewObjectController;
+
+    public Texture2D generateImage(Dictionary<string, object> DictionaryData, StorageReference imageRef)
+    {
+        const long maxAllowedSize = 1 * 1024 * 1024;
+        Texture2D texture = new Texture2D(128, 128);
+
+        _ = imageRef.GetBytesAsync(maxAllowedSize).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsFaulted || task.IsCanceled)
+            {
+                Debug.LogException(task.Exception);
+            }
+            else
+            {
+                // ?????
+                byte[] fileContents = task.Result;
+                texture.LoadImage(fileContents);
+
+            }
+        });
+        return texture;
+    }
+
     public async void Awake()
     {
         _meshRenderer = after_paint.GetComponent<MeshRenderer>();
-        // Firebase storage のクライアント
+        // Firebase storage ???N???C?A???g
         FirebaseStorage storage = FirebaseStorage.DefaultInstance;
         StorageReference storageRef = storage.GetReferenceFromUrl("gs://areal-71159.appspot.com");
 
-        const long maxAllowedSize = 1 * 1024 * 1024;
-
-        // Firestore のクライアント
+        // Firestore ???N???C?A???g
         FirebaseFirestore firestore = FirebaseFirestore.DefaultInstance;
 
-        QuerySnapshot getData = await firestore.Collection("products").GetSnapshotAsync();
+        // Limit(10)?10????????????????
+        QuerySnapshot getData = await firestore.Collection("products").OrderBy("created_at").Limit(20).GetSnapshotAsync();
         foreach (var document in getData.Documents)
         {
             Dictionary<string, object> DictionaryData = document.ToDictionary();
+            Debug.Log(DictionaryData["created_at"]);
 
-            StorageReference imageRef = storageRef.Child(DictionaryData["changeImgPath"].ToString());
-            Debug.Log(DictionaryData["changeImgPath"]);
+            // ??????????????AfterpaintList????????
+            StorageReference beforeImageRef = storageRef.Child(DictionaryData["path"].ToString());
+            Texture2D beforeTexture = generateImage(DictionaryData, beforeImageRef);
+            BeforepaintList.Add(beforeTexture);
 
-            _ = imageRef.GetBytesAsync(maxAllowedSize).ContinueWithOnMainThread(task =>
-            {
-                if (task.IsFaulted || task.IsCanceled)
-                {
-                    Debug.LogException(task.Exception);
-                }
-                else
-                {
-                    // 画像データ
-                    byte[] fileContents = task.Result;
-                    Debug.Log("画像データを取得しました");
 
-                    Texture2D texture = new Texture2D(128, 128);
-                    texture.LoadImage(fileContents);
-                    Texture paintTexture = texture as Texture;
-
-                    //_meshRenderer.material.mainTexture = paintTexture;
-
-                    AfterpaintList.Add(paintTexture);
-                    Debug.Log("画像を生成しました");
-                }
-            });
+            StorageReference afterImageRef = storageRef.Child(DictionaryData["changeImgPath"].ToString());
+            Texture2D afterTexture = generateImage(DictionaryData, afterImageRef);
+            AfterpaintList.Add(afterTexture);
 
         }
         Invoke("Active", 2);
-       
-
-
     }
 
     private void Active()

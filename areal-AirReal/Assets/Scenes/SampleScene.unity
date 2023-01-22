@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &18539973 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6262340381322615976, guid: c1da898cd503f7648b2138f6efb4b52d, type: 3}
+  m_PrefabInstance: {fileID: 975107471486188557}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &141591556 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7905328496010981270, guid: c1da898cd503f7648b2138f6efb4b52d, type: 3}
@@ -395,6 +400,11 @@ Transform:
   m_Father: {fileID: 1925994014}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &943873315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 978931660443052166, guid: c1da898cd503f7648b2138f6efb4b52d, type: 3}
+  m_PrefabInstance: {fileID: 975107471486188557}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1001215472 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1105511023701087725, guid: c1da898cd503f7648b2138f6efb4b52d, type: 3}
@@ -677,10 +687,7 @@ MonoBehaviour:
   after_paint: {fileID: 727359526}
   paintMaterial: {fileID: 0}
   AfterpaintList: []
-  AfterobjList:
-  - {fileID: 1187445931}
-  - {fileID: 1546768517}
-  - {fileID: 1926552429}
+  BeforepaintList: []
   material: {fileID: 2100000, guid: ee6274899f8d089459f2c694114908fb, type: 2}
   viewObjectController: {fileID: 919132148750740458}
 --- !u!114 &919132148750740458
@@ -697,6 +704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   getImageListController: {fileID: 919132148750740457}
   AfterpaintList: []
+  BeforepaintList: []
   AfterobjList:
   - {fileID: 1187445931}
   - {fileID: 1546768517}
@@ -718,8 +726,11 @@ MonoBehaviour:
   - {fileID: 760714834}
   - {fileID: 1685030394}
   - {fileID: 783902128}
-  - {fileID: 1685030394}
+  BeforeobjList: []
   material: {fileID: 2100000, guid: ee6274899f8d089459f2c694114908fb, type: 2}
+  CanvasObj:
+  - {fileID: 18539973}
+  - {fileID: 943873315}
   active: 0
 --- !u!1001 &975107471486188557
 PrefabInstance:
