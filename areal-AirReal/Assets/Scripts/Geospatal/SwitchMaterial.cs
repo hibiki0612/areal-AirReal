@@ -13,7 +13,7 @@ public class SwitchMaterial : MonoBehaviour
         _renderers = GetComponentsInChildren<Renderer>().ToList();
         foreach (var renderer in _renderers)
         {
-            renderer.material = _replaceTarget;
+            if(renderer.transform.parent == transform) renderer.material = _replaceTarget;
         }
     }
 }

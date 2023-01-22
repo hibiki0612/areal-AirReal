@@ -121,7 +121,7 @@ public class BuildingsGeospatialController : MonoBehaviour
         {
             //GeoSpatialアンカーを作成
             //この瞬間に反映されるわけではなくARGeospatialAnchorのUpdate関数で毎フレーム補正がかかる
-            var offsetRotation = Quaternion.AngleAxis(0f, Vector3.up);
+            var offsetRotation = Quaternion.AngleAxis(180f, Vector3.up);
             anchor = arAnchorManager.AddAnchor(lat, lng, alt, offsetRotation);
         }
 
