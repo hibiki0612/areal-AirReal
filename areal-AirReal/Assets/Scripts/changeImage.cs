@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Firebase.Storage;
 using Firebase.Firestore;
@@ -60,6 +61,7 @@ public class changeImage : MonoBehaviour
                 product_data["quaternion_y"] = quaternion_y;
                 product_data["quaternion_z"] = quaternion_z;
                 product_data["quaternion_w"] = quaternion_w;
+                product_data["created_at"] = Firebase.Firestore.Timestamp.FromDateTime(DateTime.Now);
                 //product_data["likes"];
                 //product_data["description"]
 
