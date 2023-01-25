@@ -129,7 +129,7 @@ public class SendJsonController : MonoBehaviour
         color_str = textAndColorSave.color_str;
         _sentence = _text.text;
 
-        var url = "http://172.20.10.13:8080/image";
+        var url = "http://18.182.135.49:5000/image";
         var data = new Data();
 
         data.word = word_str;

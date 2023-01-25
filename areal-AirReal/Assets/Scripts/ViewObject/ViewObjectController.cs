@@ -30,11 +30,10 @@ public class ViewObjectController : MonoBehaviour
                     AfterobjList.Add(afterCanvas);
                 }
             }
-
-
+            
             AfterpaintList = getImageListController.AfterpaintList;
             BeforepaintList = getImageListController.BeforepaintList;
-            Debug.Log(BeforepaintList.Count);
+            //Debug.Log(BeforepaintList.Count);
             for (int i = 0; AfterobjList.Count > i; i++)
             {
                 var AfterpaintMaterial = new Material(material);

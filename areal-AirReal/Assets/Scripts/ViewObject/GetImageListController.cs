@@ -56,7 +56,7 @@ public class GetImageListController : MonoBehaviour
         foreach (var document in getData.Documents)
         {
             Dictionary<string, object> DictionaryData = document.ToDictionary();
-            Debug.Log(DictionaryData["created_at"]);
+            //Debug.Log(DictionaryData["created_at"]);
 
             // ??????????????AfterpaintList????????
             StorageReference beforeImageRef = storageRef.Child(DictionaryData["path"].ToString());
